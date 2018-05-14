@@ -12,7 +12,7 @@ function init() {
 function gameLoop() {
   //move player
 
-  //move blocks
+  //move pipes
 
   //check for game over
 
@@ -27,7 +27,7 @@ function draw() {
 
   //draw player
 
-  //draw blocks
+  //draw pipes
 
   //draw score
   

@@ -5,7 +5,7 @@ let ctx = null;
 let player = {x: 100, y: 50, w: 50, h: 50, vy: 0};
 let gravity = 2;
 
-function block(x, y, w, h, vx) {
+function pipe(x, y, w, h, vx) {
   this.x = x;
   this.y = y;
   this.w = w;
@@ -13,16 +13,16 @@ function block(x, y, w, h, vx) {
   this.vx = vx;
 }
 
-let bottomBlock = new block(0, 0, 80, 480, -5);
-let topBlock = new block(0, 0, 80, 480, -5);
+let bottomPipe = new pipe(0, 0, 80, 480, -5);
+let topPipe = new pipe(0, 0, 80, 480, -5);
 let gap = 150;
 
-function resetBlocks() {
+function resetPipes() {
   let range = canv.height - gap;
-  bottomBlock.y = (Math.random() * range) + gap; 
-  topBlock.y = bottomBlock.y - gap - topBlock.h;
-  bottomBlock.x = canv.width;
-  topBlock.x = canv.width;
+  bottomPipe.y = (Math.random() * range) + gap; 
+  topPipe.y = bottomPipe.y - gap - topPipe.h;
+  bottomPipe.x = canv.width;
+  topPipe.x = canv.width;
 }
 
 let score = 0;
@@ -33,7 +33,7 @@ function init() {
   document.addEventListener('keydown', ()=>{player.vy = -15});
   ctx.font = '40px Courier';
 
-  resetBlocks();
+  resetPipes();
   setInterval(gameLoop, 50);
 }
 
@@ -43,19 +43,19 @@ function gameLoop() {
   player.y += player.vy;
   player.y = Math.max(player.y, 0);
 
-  //move blocks
-  bottomBlock.x += bottomBlock.vx;
-  topBlock.x += topBlock.vx;
-  if(bottomBlock.x < -bottomBlock.w) {
-    resetBlocks();
+  //move pipes
+  bottomPipe.x += bottomPipe.vx;
+  topPipe.x += topPipe.vx;
+  if(bottomPipe.x < -bottomPipe.w) {
+    resetPipes();
     score += 10;
   }
 
   //check for game over
-  if(player.y > canv.height || collision(player, bottomBlock) || collision(player, topBlock)) {
+  if(player.y > canv.height || collision(player, bottomPipe) || collision(player, topPipe)) {
     player.y = 50;
     player.vy = 0;
-    resetBlocks();
+    resetPipes();
     score = 0;
   }
 
@@ -74,10 +74,10 @@ function draw() {
   ctx.fillStyle = 'Yellow';
   ctx.fillRect(player.x, player.y, player.w, player.h);
 
-  //draw blocks
+  //draw pipes
   ctx.fillStyle = 'Green';
-  ctx.fillRect(bottomBlock.x, bottomBlock.y, bottomBlock.w, bottomBlock.h);
-  ctx.fillRect(topBlock.x, topBlock.y, topBlock.w, topBlock.h);
+  ctx.fillRect(bottomPipe.x, bottomPipe.y, bottomPipe.w, bottomPipe.h);
+  ctx.fillRect(topPipe.x, topPipe.y, topPipe.w, topPipe.h);
 
   //draw score
   ctx.fillStyle = 'Black';
