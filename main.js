@@ -34,6 +34,4 @@ function draw() {
 }
 
 //Handy-dandy helper
-function collision(b1, b2) {
-  return ((b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h));
-}
+collision = (b1, b2) => ((b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h));
