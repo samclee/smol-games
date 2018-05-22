@@ -1,39 +1,34 @@
 //main.js
-let canv = null;
-let ctx = null;
+let cnv = undefined;
+let ctx = undefined;
 
+//Part 1
 let player = {x: 100, y: 50, w: 50, h: 50, vy: 0};
 let gravity = 2;
 
-function pipe(x, y, w, h, vx) {
-  this.x = x;
-  this.y = y;
-  this.w = w;
-  this.h = h;
-  this.vx = vx;
-}
-
-let bottomPipe = new pipe(0, 0, 80, 480, -5);
-let topPipe = new pipe(0, 0, 80, 480, -5);
+//Part 2
+let bottomPipe = {x: 0, y: 0, w: 80, h: 480, vx: -5};
+let topPipe = {x: 0, y: 0, w: 80, h: 480, vx: -5};
 let gap = 150;
 
 function resetPipes() {
-  let range = canv.height - gap;
+  let range = cnv.height - gap;
   bottomPipe.y = (Math.random() * range) + gap; 
   topPipe.y = bottomPipe.y - gap - topPipe.h;
-  bottomPipe.x = canv.width;
-  topPipe.x = canv.width;
+  bottomPipe.x = cnv.width;
+  topPipe.x = cnv.width;
 }
 
+//Part 3
 let score = 0;
 
 function init() {
-  canv = document.getElementById('game');
-  ctx = canv.getContext('2d');
+  cnv = document.getElementById('game');
+  ctx = cnv.getContext('2d');
   document.addEventListener('keydown', ()=>{player.vy = -15});
-  ctx.font = '40px Courier';
-
   resetPipes();
+  ctx.font = '40px Courier';
+  
   setInterval(gameLoop, 50);
 }
 
@@ -43,7 +38,7 @@ function gameLoop() {
   player.y += player.vy;
   player.y = Math.max(player.y, 0);
 
-  //move pipes
+  //move/reset pipes
   bottomPipe.x += bottomPipe.vx;
   topPipe.x += topPipe.vx;
   if(bottomPipe.x < -bottomPipe.w) {
@@ -52,7 +47,7 @@ function gameLoop() {
   }
 
   //check for game over
-  if(player.y > canv.height || collision(player, bottomPipe) || collision(player, topPipe)) {
+  if(player.y > cnv.height || coll(player, bottomPipe) || coll(player, topPipe)) {
     player.y = 50;
     player.vy = 0;
     resetPipes();
@@ -64,11 +59,11 @@ function gameLoop() {
 }
 
 function draw() {
-  ctx.clearRect(0, 0, canv.width, canv.height);
+  ctx.clearRect(0, 0, cnv.width, cnv.height);
 
   //draw bg
   ctx.fillStyle = 'SkyBlue';
-  ctx.fillRect(0, 0, canv.width, canv.height);
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
 
   //draw player
   ctx.fillStyle = 'Yellow';
@@ -85,4 +80,4 @@ function draw() {
 }
 
 //Handy-dandy helper
-collision = (b1, b2) => ((b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h));
+let coll = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h);
