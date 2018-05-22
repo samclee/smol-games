@@ -78,6 +78,6 @@ function draw() {
   ctx.fillText('Score: ' + score, 30, 50);
 }
 
-//Handy-dandy helper
+//Handy-dandy helpers
 let overlap = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h);
 let random = (min, max) => (Math.random() * (max - min) + min);
