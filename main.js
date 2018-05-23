@@ -27,8 +27,6 @@ function gameLoop() {
 }
 
 function draw() {
-  ctx.clearRect(0, 0, cnv.width, cnv.height);
-
   //draw bg
 
   //draw player
