@@ -1,6 +1,6 @@
 //main.js
-let cnv = undefined;
-let ctx = undefined;
+var cnv = undefined
+var ctx = undefined
 
 //Part 1
 
@@ -9,34 +9,33 @@ let ctx = undefined;
 //Part 3
 
 function init() {
-  cnv = document.getElementById('game');
-  ctx = cnv.getContext('2d');
+  cnv = document.getElementById('game')
+  ctx = cnv.getContext('2d')
   
-  setInterval(gameLoop, 50);
+  setInterval(gameLoop, 50)
 }
 
 function gameLoop() {
-  //accelerate player, move player, make ceiling
+  // MOVE PLR
 
-  //move both pipes, reset if offscreen
+  // PASS PIPES
 
-  //check for game over
+  // GAME OVER
 
-  //draw game
-  draw();
+  // DRAW
+  draw()
 }
 
 function draw() {
-  //draw bg
+  // draw bg
 
-  //draw player
+  // draw plr
 
-  //draw pipes
+  // draw pipes
 
-  //draw score
-
+  // draw score
 }
 
 //Handy-dandy helpers
-let overlap = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h);
-let random = (min, max) => (Math.random() * (max - min) + min);
+var hit = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h)
+var random = (min, max) => (Math.random() * (max - min) + min)
