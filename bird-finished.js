@@ -1,4 +1,4 @@
-//main.js
+//mbird-finished.js
 var cnv = undefined
 var ctx = undefined
 

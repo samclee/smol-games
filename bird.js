@@ -1,4 +1,4 @@
-//main.js
+//bird.js
 var cnv = undefined
 var ctx = undefined
 
