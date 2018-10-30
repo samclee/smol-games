@@ -1,4 +1,6 @@
 //jump-finished.js
+// based off of: 
+// https://www.youtube.com/watch?v=FGxdoHezkks&t=439s
 var cnv = undefined
 var ctx = undefined
 
