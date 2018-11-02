@@ -3,7 +3,7 @@ var cnv = undefined
 var ctx = undefined
 
 //Part 1
-var plr = {x:100, y:50, w:50, h:50, vy:0}
+var p = {x:100, y:50, w:50, h:50, vy:0}
 
 //Part 2
 var btmP = {x:0, y:0, w:80, h:480, vx:-8}
@@ -11,7 +11,7 @@ var topP = {x:0, y:0, w:80, h:480, vx:-8}
 var gap = 150
 
 function resetPipes() {
-  btmP.y = random(gap, cnv.height) 
+  btmP.y = rnd(gap, cnv.height) 
   topP.y = btmP.y - gap - topP.h
 
   btmP.x = cnv.width
@@ -24,7 +24,7 @@ var score = 0
 function init() {
   cnv = document.getElementById('game')
   ctx = cnv.getContext('2d')
-  document.addEventListener('keydown', ()=>{plr.vy = -15})
+  document.addEventListener('keydown', ()=>{p.vy = -15})
   resetPipes()
   ctx.font = '40px Courier'
   
@@ -32,10 +32,10 @@ function init() {
 }
 
 function gameLoop() {
-  // MOVE PLR
-  plr.vy += 2
-  plr.y += plr.vy
-  plr.y = Math.max(plr.y, 0)
+  // MOVE p
+  p.vy += 2
+  p.y += p.vy
+  p.y = Math.max(p.y, 0)
 
   // MOVE PIPES
   btmP.x += btmP.vx
@@ -46,9 +46,9 @@ function gameLoop() {
   }
 
   // GAME OVER
-  if (plr.y > cnv.height || hit(plr, btmP) || hit(plr, topP)) {
-    plr.y = 50
-    plr.vy = 0
+  if (p.y > cnv.height || hit(p, btmP) || hit(p, topP)) {
+    p.y = 50
+    p.vy = 0
     resetPipes()
     score = 0
   }
@@ -62,9 +62,9 @@ function draw() {
   ctx.fillStyle = 'SkyBlue'
   ctx.fillRect(0, 0, cnv.width, cnv.height)
 
-  // draw plr
+  // draw p
   ctx.fillStyle = 'Yellow'
-  ctx.fillRect(plr.x, plr.y, plr.w, plr.h)
+  ctx.fillRect(p.x, p.y, p.w, p.h)
 
   // draw pipes
   ctx.fillStyle = 'Green'
@@ -78,4 +78,4 @@ function draw() {
 
 //Handy-dandy helpers
 var hit = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h)
-var random = (min, max) => (Math.random() * (max - min) + min)
+var rnd = (min, max) => (Math.rnd() * (max - min) + min)
