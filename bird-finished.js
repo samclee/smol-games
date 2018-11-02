@@ -78,4 +78,4 @@ function draw() {
 
 //Handy-dandy helpers
 var hit = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h)
-var rnd = (min, max) => (Math.rnd() * (max - min) + min)
+var rnd = (min, max) => (Math.random() * (max - min) + min)
