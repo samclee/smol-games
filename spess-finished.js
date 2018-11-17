@@ -20,12 +20,15 @@ l=[]
 //Part 3
 m=[]
 
-
 function init() {
   cnv = document.getElementById('game')
   ctx = cnv.getContext('2d')
   document.addEventListener('keydown',keyDown)
   document.addEventListener('keyup',keyUp)
+  for(i=0;i<5;i++)
+    m.push(new rect(rnd(640,740),rnd(0,440),
+                    rnd(30,50),rnd(30,50),
+                    rnd(10,20)))
   setInterval(gameLoop, 50)
 }
 
@@ -36,6 +39,13 @@ function gameLoop() {
     p.y+=p.s
 
   // cycle through meteors
+  for(i=m.length-1;i>-1;i--) {
+    m[i].x-=m[i].s
+    if (m[i].x<-m[i].w) {
+      m[i].x = rnd(640,700)
+      m[i].y = rnd(0,440)
+    }
+  }
 
   // cull lasers
   for(i=l.length-1;i>-1;i--) {
@@ -63,6 +73,9 @@ function draw() {
   ctx.fillRect(p.x,p.y,p.w,p.h)
 
   // draw rocks
+  ctx.fillStyle = 'Grey'
+  for(i=0;i<m.length;i++)
+    ctx.fillRect(m[i].x,m[i].y,m[i].w,m[i].h)
 
   // draw score
 }
@@ -95,4 +108,4 @@ function keyUp(e){
 
 //Handy-dandy helpers
 var hit = (b1, b2) => (b1.x < b2.x + b2.w) && (b2.x < b1.x + b1.w) && (b1.y < b2.y + b2.h) && (b2.y < b1.y + b1.h)
-var rnd = (min, max) => (Math.rnd() * (max - min) + min)
+var rnd = (min, max) => (Math.random() * (max - min) + min)
