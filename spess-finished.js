@@ -1,34 +1,27 @@
 //bird.js
-var cnv = undefined
-var ctx = undefined
+var cnv
+var ctx
 
 //Part 1
-function rect(x,y,w,h,s){
+function circ(x,y,r,c,s){
   this.x=x
   this.y=y
-  this.w=w
-  this.h=h
+  this.r=r
+  this.c=c
   this.s=s
 }
-p = new rect(50,50,64,64,20)
+p = new circ(100,100,30,'Red',10)
 p.u=false
 p.d=false
-
-//Part 2
-l=[]
-
-//Part 3
-m=[]
+p.l=false
+p.r=false
 
 function init() {
   cnv = document.getElementById('game')
   ctx = cnv.getContext('2d')
   document.addEventListener('keydown',keyDown)
   document.addEventListener('keyup',keyUp)
-  for(i=0;i<5;i++)
-    m.push(new rect(rnd(640,740),rnd(0,440),
-                    rnd(30,50),rnd(30,50),
-                    rnd(10,20)))
+
   setInterval(gameLoop, 50)
 }
 
@@ -37,22 +30,11 @@ function gameLoop() {
     p.y-=p.s
   else if (p.d)
     p.y+=p.s
-
-  // cycle through meteors
-  for(i=m.length-1;i>-1;i--) {
-    m[i].x-=m[i].s
-    if (m[i].x<-m[i].w) {
-      m[i].x = rnd(640,700)
-      m[i].y = rnd(0,440)
-    }
-  }
-
-  // cull lasers
-  for(i=l.length-1;i>-1;i--) {
-    l[i].x+=l[i].s
-    if (l[i].x>640)
-      l.splice(i,1)
-  }
+  
+  if (p.l)
+    p.x-=p.s
+  else if (p.r)
+    p.x+=p.s
 
   // DRAW
   draw()
@@ -60,24 +42,13 @@ function gameLoop() {
 
 function draw() {
   // draw bg
-  ctx.fillStyle = 'Black'
-  ctx.fillRect(0,0,cnv.width,cnv.height)
-
-  // draw lasers
-  ctx.fillStyle = 'LimeGreen'
-  for(i=0;i<l.length;i++)
-    ctx.fillRect(l[i].x,l[i].y,l[i].w,l[i].h)
-
+  //ctx.fillStyle = 'Black'
+  //ctx.fillRect(0,0,cnv.width,cnv.height)
+  
   // draw plr
-  ctx.fillStyle = 'White'
+  ctx.fillStyle = p.c
   ctx.fillRect(p.x,p.y,p.w,p.h)
 
-  // draw rocks
-  ctx.fillStyle = 'Grey'
-  for(i=0;i<m.length;i++)
-    ctx.fillRect(m[i].x,m[i].y,m[i].w,m[i].h)
-
-  // draw score
 }
 
 function keyDown(e){
@@ -88,9 +59,11 @@ function keyDown(e){
     case 'ArrowDown':
       p.d=true
       break
-    case ' ':
-      console.log(l.length)
-      l.push(new rect(p.x+p.w/2-10,p.y+p.h/2-10,20,20,20))
+    case 'ArrowLeft':
+      p.l=true
+      break
+    case 'ArrowRight':
+      p.r=true
       break
   }
 }
@@ -102,6 +75,12 @@ function keyUp(e){
       break
     case 'ArrowDown':
       p.d=false
+      break
+    case 'ArrowLeft':
+      p.l=false
+      break
+    case 'ArrowRight':
+      p.r=false
       break
   }
 }
